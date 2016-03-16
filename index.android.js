@@ -1,8 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- */
-'use strict';
 import React, {
   AppRegistry,
   Component,
@@ -12,37 +7,72 @@ import React, {
   TextInput
 } from 'react-native';
 
-class MyFirstApp extends Component {
-  render() {
-    return (
-      <View style={styles.parent}>
-        <Text>Type something in English:</Text>
-        <TextInput />
-        <Text style = {styles.germanLabel} >Its German equivalent is:</Text>
-        <Text style = {styles.germanWord} ></Text>
-      </View>
-    );
-  }
-}
+var english_german = require('./english_german.json');
 
-const styles = StyleSheet.create({
-  // For the container View
-  parent: {
-      padding: 16
+var styles = StyleSheet.create({
+
+	// For the container View
+    parent: {
+        padding: 16
+    },
+
+	// For the Text label
+    germanLabel: {
+        marginTop: 20,
+        fontWeight: 'bold'
+    },
+
+	// For the Text meaning
+    germanWord: {
+        marginTop: 15,
+        fontSize: 30,
+        fontStyle: 'italic'
+    }
+});
+
+var MyFirstApp = React.createClass({
+
+  getInitialState: function() {
+    return {
+        input: '',
+        output: ''
+    };
   },
 
-  // For the Text label
-  germanLabel: {
-      marginTop: 20,
-      fontWeight: 'bold'
+  render: function() {
+    var layout =
+        <View style = { styles.parent } >
+            <Text>
+              Type something in English:
+            </Text>
+
+            <TextInput
+                onChangeText={(e) => this.setState({input: e})}
+                text = { this.state.input }
+                onSubmitEditing = { this.showMeaning }
+            />
+
+            <Text style = {styles.germanLabel}>
+              Its German equivalent is:
+            </Text>
+
+            <Text style = {styles.germanWord}>
+              {this.state.output}
+            </Text>
+        </View>
+    ;
+	return layout;
   },
 
-  // For the Text meaning
-  germanWord: {
-      marginTop: 15,
-      fontSize: 30,
-      fontStyle: 'italic'
-  }
+    showMeaning: function() {
+        var meaning = this.state.input in english_german ?
+                        english_german[this.state.input] :
+                        "Not Found";
+
+        this.setState({
+             output: meaning
+        });
+    },
 });
 
 AppRegistry.registerComponent('MyFirstApp', () => MyFirstApp);
