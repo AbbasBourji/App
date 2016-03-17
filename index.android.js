@@ -1,13 +1,22 @@
-import React, { AppRegistry, Component, Image, StyleSheet, Text, View, } from 'react-native';
+import React, { AppRegistry, Component, Image, ListView, StyleSheet, Text, View, } from 'react-native';
 
 var MOCKED_MOVIES_DATA = [
   {title: 'Title', year: '2015', posters: {thumbnail: 'http://i.imgur.com/UePbdph.jpg'}},
 ];
 
-var REQUEST_URL = 'https://raw.githubusercontent.com/facebook/react-native/master/docs/MoviesExample.json';
+
+var API_KEY = '7waqfqbprs7pajbz28mqf6vz'; var API_URL = 'http://api.rottentomatoes.com/api/public/v1.0/lists/movies/in_theaters.json'; var PAGE_SIZE = 25; var PARAMS = '?apikey=' + API_KEY + '&page_limit=' + PAGE_SIZE; var REQUEST_URL = API_URL + PARAMS;
 
 class MyFirstApp extends Component {
-  constructor(props) { super(props); this.state = { movies: null, }; }
+constructor(props) {
+  super(props);
+  this.state = {
+    dataSource: new ListView.DataSource({
+      rowHasChanged: (row1, row2) => row1 !== row2,
+    }),
+    loaded: false,
+    };
+  }
 
   componentDidMount() {
     this.fetchData();
@@ -15,21 +24,25 @@ class MyFirstApp extends Component {
 
   fetchData() {
     fetch(REQUEST_URL)
-      .then((response) => response.json())
-      .then((responseData) => {
-        this.setState({
-          movies: responseData.movies,
-        });
-      })
-      .done();
+    .then((response) => response.json())
+    .then((responseData) => {
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(responseData.movies),
+        loaded: true,
+      });
+    })
+    .done();
   }
 
-  render() { if (!this.state.movies) {
-      return this.renderLoadingView();
-    }
-    var movie = this.state.movies[0];
-    return this.renderMovie(movie);
+  render() { if (!this.state.loaded) {
+    return this.renderLoadingView();
+  } return (
+    <ListView dataSource={this.state.dataSource}
+    renderRow={this.renderMovie} style={styles.listView} />
+    );
   }
+
+
   renderLoadingView() {
     return (
       <View style={styles.container}>
@@ -65,6 +78,7 @@ var styles = StyleSheet.create({
   rightContainer: { flex: 1, },
   title: { fontSize: 20, marginBottom: 8, textAlign: 'center', },
   year: { textAlign: 'center', },
+  listView: { paddingTop: 20, backgroundColor: '#F5FCFF', },
 });
 
 AppRegistry.registerComponent('MyFirstApp', () => MyFirstApp);
