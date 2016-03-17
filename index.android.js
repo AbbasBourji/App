@@ -7,19 +7,20 @@ import React, {
   TextInput
 } from 'react-native';
 
-var styles = StyleSheet.create({
-});
 
-var MyFirstApp = React.createClass({
-  render: function() {
-    var layout =
-        <View>
-            <Text>
-            </Text>
-        </View>
-    ;
-	return layout;
+
+class MyFirstApp extends Component {
+  render() {
+    return (
+      <View>
+        <Text></Text>
+        <Text></Text>
+      </View>
+    );
   }
+};
+
+var styles = StyleSheet.create({
 });
 
 AppRegistry.registerComponent('MyFirstApp', () => MyFirstApp);
