@@ -9,12 +9,13 @@ import React, {
 
 var DayItem = require('./src/day-item.js');
 
-var Days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+var DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 class MyFirstApp extends Component {
   render() {
     return (
       <View style={styles.container}>
         <Text>Days of the week</Text>
+        <DayItem day={DAYS[0]}/>
       </View>
     );
   }
