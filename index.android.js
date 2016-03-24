@@ -9,18 +9,28 @@ import React, {
 var MyFirstApp = React.createClass({
   render: function() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
+      <View>
+        <Text>
+          00:00:00
         </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Shake or press menu button for dev menu
-        </Text>
+        {this.startStopButton()}
+        {this.lapButton()}
       </View>
     );
+  },
+  startStopButton: function(){
+    return <View>
+        <Text>
+          Start
+        </Text>
+      </View>
+  },
+  lapButton: function(){
+    return <View>
+      <Text>
+        Lap
+      </Text>
+    </View>
   }
 });
 
