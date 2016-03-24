@@ -9,12 +9,28 @@ import React, {
 var MyFirstApp = React.createClass({
   render: function() {
     return (
-      <View>
-        <Text>
-          00:00:00
-        </Text>
-        {this.startStopButton()}
-        {this.lapButton()}
+      <View style={styles.container}>
+        <View style={[styles.header, this.border('yellow')]}>
+
+          <View style={this.border('red')}>
+            <Text>
+              00:00:00
+            </Text>
+          </View>
+
+          <View style={this.border('green')}>
+            {this.startStopButton()}
+            {this.lapButton()}
+          </View>
+
+        </View>
+
+        <View style={[styles.footer, this.border('blue')]}>
+          <Text>
+            I a List of Laps
+          </Text>
+        </View>
+
       </View>
     );
   },
@@ -31,26 +47,32 @@ var MyFirstApp = React.createClass({
         Lap
       </Text>
     </View>
+  },
+  border: function(color){
+    return {
+      borderColor: color,
+      borderWidth: 4
+    }
   }
 });
 
 var styles = StyleSheet.create({
-  container: {
+  container:{
+    flex: 1, // fit all the screen
+    alignItems: 'stretch'
+  },
+  header:{ // Yellow
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    //justifyContent: 'center',
+    //alignItems: 'center'
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+  footer:{ // Blue
+    flex: 1,
+    //justifyContent: 'center',
+    //alignItems: 'center'
+  }
+
+
 });
 
 AppRegistry.registerComponent('MyFirstApp', () => MyFirstApp);
