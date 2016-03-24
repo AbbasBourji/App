@@ -1,18 +1,13 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- */
 'use strict';
 import React, {
   AppRegistry,
-  Component,
   StyleSheet,
   Text,
   View
 } from 'react-native';
 
-class MyFirstApp extends Component {
-  render() {
+var MyFirstApp = React.createClass({
+  render: function() {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
@@ -27,9 +22,9 @@ class MyFirstApp extends Component {
       </View>
     );
   }
-}
+});
 
-const styles = StyleSheet.create({
+var styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
