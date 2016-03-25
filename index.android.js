@@ -1,9 +1,11 @@
 'use strict';
 import React, {
-  AppRegistry,
-  StyleSheet,
+  Component,
   Text,
-  View
+  View,
+  TouchableHighlight, // to able to click in buttons
+  AppRegistry,
+  StyleSheet
 } from 'react-native';
 
 var MyFirstApp = React.createClass({
@@ -35,11 +37,14 @@ var MyFirstApp = React.createClass({
     );
   },
   startStopButton: function(){
-    return <View>
+    return <TouchableHighlight // to make the it clickable
+      underlayColor="gray" // To change Color on Click
+      onPress={this.handleStartPress} // Handling on click function
+      >
         <Text>
           Start
         </Text>
-      </View>
+      </TouchableHighlight>
   },
   lapButton: function(){
     return <View>
@@ -47,6 +52,9 @@ var MyFirstApp = React.createClass({
         Lap
       </Text>
     </View>
+  },
+  handleStartPress: function(){
+    console.log('Start was Pressed');
   },
   border: function(color){
     return {
@@ -72,7 +80,9 @@ var styles = StyleSheet.create({
     //alignItems: 'center'
   },
   timerWrapper: { // Red
-    flex: 5 // 5/8    // height: 300 not using fix Height we need to use flex
+    flex: 5, // 5/8    // height: 300 not using fix Height we need to use flex
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   buttonWrapper:{ // Green
     flex: 3, // 3/8
