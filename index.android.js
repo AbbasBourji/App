@@ -12,13 +12,13 @@ var MyFirstApp = React.createClass({
       <View style={styles.container}>
         <View style={[styles.header, this.border('yellow')]}>
 
-          <View style={this.border('red')}>
+          <View style={[styles.timerWrapper, this.border('red')]}>
             <Text>
               00:00:00
             </Text>
           </View>
 
-          <View style={this.border('green')}>
+          <View style={[styles.buttonWrapper, this.border('green')]}>
             {this.startStopButton()}
             {this.lapButton()}
           </View>
@@ -70,9 +70,16 @@ var styles = StyleSheet.create({
     flex: 1,
     //justifyContent: 'center',
     //alignItems: 'center'
+  },
+  timerWrapper: { // Red
+    flex: 5 // 5/8    // height: 300 not using fix Height we need to use flex
+  },
+  buttonWrapper:{ // Green
+    flex: 3, // 3/8
+    flexDirection: 'row', // to make component Horizontal
+    justifyContent: 'space-around', // to make the same space between Items and between Right/Left
+    alignItems: 'center' // to make the items in Vertical Center
   }
-
-
 });
 
 AppRegistry.registerComponent('MyFirstApp', () => MyFirstApp);
