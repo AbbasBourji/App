@@ -14,7 +14,8 @@ var MyFirstApp = React.createClass({
     return {
       timeElapsed: null,
       running : false,
-      startTime: null
+      startTime: null,
+      laps: []
     }
   },
   render: function() {
@@ -36,13 +37,23 @@ var MyFirstApp = React.createClass({
         </View>
 
         <View style={styles.footer}>
-          <Text>
-            I a List of Laps
-          </Text>
+          {this.laps()}
         </View>
 
       </View>
     );
+  },
+  laps: function(){
+    return this.state.laps.map(function(time, index){
+      return <View style={styles.lap}>
+        <Text style={styles.lapText}>
+          lap # {index + 1}
+        </Text>
+        <Text style={styles.lapText}>
+          {formatTime(time)}
+        </Text>
+      </View>
+    });
   },
   startStopButton: function(){
     var style = this.state.running ? styles.stopButton : styles.startButton;
@@ -69,8 +80,10 @@ var MyFirstApp = React.createClass({
   },
   handleLapPress: function(){
     var lap = this.state.timeElapsed;
+
     this.setState({
-      startTime: new Date()
+      startTime: new Date(),
+      laps: this.state.laps.concat([lap]) // add Value in Array same as push but this methode better
     });
   },
   handleStartPress: function(){
@@ -140,6 +153,13 @@ var styles = StyleSheet.create({
   },
   stopButton:{
     borderColor: '#CC0000'
+  },
+  lap:{
+    justifyContent: 'space-around',
+    flexDirection: 'row'
+  },
+  lapText:{
+    fontSize: 30
   }
 });
 
