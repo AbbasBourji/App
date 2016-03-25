@@ -13,7 +13,8 @@ var MyFirstApp = React.createClass({
   getInitialState: function(){
     return {
       timeElapsed: null,
-      running : false
+      running : false,
+      startTime: null
     }
   },
   render: function() {
@@ -56,11 +57,21 @@ var MyFirstApp = React.createClass({
       </TouchableHighlight>
   },
   lapButton: function(){
-    return <View style={styles.button}>
+    return <TouchableHighlight
+      style={styles.button}
+      underlayColor="gray"
+      onPress={this.handleLapPress}
+      >
       <Text>
         Lap
       </Text>
-    </View>
+    </TouchableHighlight>
+  },
+  handleLapPress: function(){
+    var lap = this.state.timeElapsed;
+    this.setState({
+      startTime: new Date()
+    });
   },
   handleStartPress: function(){
     if(this.state.running){ // if the Timer Running ?
@@ -69,12 +80,12 @@ var MyFirstApp = React.createClass({
       return
     }
 
-    var startTime = new Date();
+    this.setState({startTime: new Date()});
 
     this.interval = setInterval( () => { // () => function()
       // Use to update the state with new Value
       this.setState({
-        timeElapsed: new Date() - startTime,
+        timeElapsed: new Date() - this.state.startTime,
         running: true
       });
     }, 30);
