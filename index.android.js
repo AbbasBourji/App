@@ -7,8 +7,14 @@ import React, {
   AppRegistry,
   StyleSheet
 } from 'react-native';
+var formatTime = require('minutes-seconds-milliseconds');
 
 var MyFirstApp = React.createClass({
+  getInitialState: function(){
+    return {
+      timeElapsed: null
+    }
+  },
   render: function() {
     return (
       <View style={styles.container}>
@@ -16,7 +22,7 @@ var MyFirstApp = React.createClass({
 
           <View style={[styles.timerWrapper, this.border('red')]}>
             <Text>
-              00:00:00
+              {formatTime(this.state.timeElapsed)}
             </Text>
           </View>
 
@@ -54,7 +60,14 @@ var MyFirstApp = React.createClass({
     </View>
   },
   handleStartPress: function(){
-    console.log('Start was Pressed');
+    var startTime = new Date();
+
+    setInterval( () => { // () => function()
+      // Use to update the state with new Value
+      this.setState({
+        timeElapsed: new Date() - startTime
+      });
+    }, 30);
   },
   border: function(color){
     return {
